@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+"""\
+    Bu kod Rick Muller tarafından yazılan 
+    http://icodesnip.com/snippet/python/manipulate-simple-polynomials-in-python
+    adresindeki koddan alınmıştır.
+"""
 import re
 from lib2to3.tests.support import parse_string
 
