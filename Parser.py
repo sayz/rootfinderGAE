@@ -4,8 +4,10 @@
     http://icodesnip.com/snippet/python/manipulate-simple-polynomials-in-python
     adresindeki koddan alınmıştır.
 """
+
 import re
-from lib2to3.tests.support import parse_string
+#from lib2to3.tests.support import parse_string
+
 
 def parse_string(str=None):
     """\
@@ -41,6 +43,7 @@ def parse_n(str):
     elif str == '+': return 1
     return eval(str)
  
+
 def parse_p(str):
     "Parse the power part of a polynomial string term"
     pat = re.compile('x\^?(\d)?')
