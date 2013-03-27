@@ -1,9 +1,11 @@
+#!/usr/bin/env python2.7
+# -*-coding:utf-8-*-
 '''
 Created on 22 Mar 2013
 
 @author: sayz
 '''
-# -*-coding:utf-8-*-
+
 
 from math import log,ceil
 

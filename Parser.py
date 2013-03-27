@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
+#-*-coding:utf-8-*-
 """\
     Bu kod Rick Muller tarafından yazılan 
     http://icodesnip.com/snippet/python/manipulate-simple-polynomials-in-python

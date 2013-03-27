@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 #-*-coding:utf-8-*-
 
 '''
@@ -27,7 +28,7 @@ def bisection(f, lis, x1=0, x2=1):
     if f1 * f2 > 0.0:  # f(x1) x f(x2) < 0 kontrolü yapılıyor
         print 'Root is not bracketed'
     else:
-        ep = 1.0e-2  # epsilon
+        ep = 0.0000000000000000000000001  # epsilon
         i = 0
         while (((x2 - x1) / (2.0 ** (i + 2))) > ep):  # hata < ep kontrolü
             print "========== " + str(i + 2) + ". deneme ==========\n"
@@ -55,6 +56,7 @@ def bisection(f, lis, x1=0, x2=1):
 
         print "epsilondan kucuk olan hata payi %1.10f\n" \
                             % (float((x2 - x1) / (2 ** (i + 2))))
+        print f1, f2
         return (x1 + x2) / 2.0
 
 
@@ -65,7 +67,14 @@ def fx(x, coef_list):
                             x ** (len(coef_list) - (j + 1))
     return result
 
-kat_list = parse_string("x^3 + 4x^2 -10")
+
+def gx(x):
+    pass
+
+kat_list = parse_string("x^3 - 8")
+kok = bisection(fx, kat_list, 1.0, 2.1)
 
 print "------------------------------------------------------\nkökümüz de \
-    yaklaşık olarak şöyle bi şey: %2.15f" % bisection(fx, kat_list, 1.0, 2.0)
+yaklaşık olarak şöyle bi şey: %2.15f" % kok
+
+print "===================="
