@@ -14,21 +14,28 @@ def isZero(n):
     if bool(n): return n
 
 
-def bisection(f, lis, x1=0, x2=1):
+def bisection(f, lis, x1=0, x2=1, ep=1.0e-4):
+    flist = list()
+    xlist = list()
+    elist = list()
+    
     f1 = f(x1, lis)  # f(x1), f(x2) hesaplanıyor.
     isZero(f1)
 
     f2 = f(x2, lis)
     isZero(f2)
     print "\n============= 1. deneme ==========\n"
-    print "x1: %2.5f, x2: %2.5f" % (x1, x2)
-    print "f(x1): %2.5f, f(x2): %2.5f\n" % (f1, f2)
-    print "bu deneme için hata payı: %1.10f\n" % ((x2 - x1) / 2.0)
+    xt = (x1, x2)
+    print "x1: %2.5f, x2: %2.5f" % xt; xlist.append(xt)
+    ft = (f1, f2)
+    print "f(x1): %2.5f, f(x2): %2.5f\n" % ft; flist.append(ft)
+    
+    e = (x2 - x1) / 2.0
+    print "bu deneme için hata payı: %1.10f\n" % e; elist.append(e)
 
     if f1 * f2 > 0.0:  # f(x1) x f(x2) < 0 kontrolü yapılıyor
         print 'Root is not bracketed'
     else:
-        ep = 0.0000000000000000000000001  # epsilon
         i = 0
         while (((x2 - x1) / (2.0 ** (i + 2))) > ep):  # hata < ep kontrolü
             print "========== " + str(i + 2) + ". deneme ==========\n"
@@ -47,17 +54,19 @@ def bisection(f, lis, x1=0, x2=1):
                 x2 = x3
                 f2 = f3
 
-            print "x1:     %2.5f, x2:     %2.5f" % (x1, x2)
-            print "----------------------------"
-            print "f(x1): %2.5f, f(x2): %2.5f\n" % (f1, f2)
-            print "bu deneme için hata payı: %1.10f\n" \
-                                % (float((x2 - x1) / (2 ** (i + 2))))
+            xt = (x1, x2)
+            print "x1: %2.5f, x2: %2.5f" % xt; xlist.append(xt)
+            ft = (f1, f2)
+            print "f(x1): %2.5f, f(x2): %2.5f\n" % ft; flist.append(ft)
+            
+            e = (x2 - x1) / (2.0 ** (i + 2))
+            print "bu deneme için hata payı: %1.10f\n" % e; elist.append(e)
+
             i += 1
 
-        print "epsilondan kucuk olan hata payi %1.10f\n" \
-                            % (float((x2 - x1) / (2 ** (i + 2))))
-        print f1, f2
-        return (x1 + x2) / 2.0
+        print "epsilondan kucuk olan hata payi %1.20f\n" % e
+        root = (x1 + x2) / 2.0
+        return root, xlist, flist, elist
 
 
 def fx(x, coef_list):
@@ -72,9 +81,9 @@ def gx(x):
     pass
 
 kat_list = parse_string("x^3 - 8")
-kok = bisection(fx, kat_list, 1.0, 2.1)
+kok = bisection(fx, kat_list, 1.0, 2.1, 0.0000001)[0]
 
 print "------------------------------------------------------\nkökümüz de \
 yaklaşık olarak şöyle bi şey: %2.15f" % kok
-
+print "f(kok):  %2.5f " % fx(kok, kat_list)
 print "===================="
