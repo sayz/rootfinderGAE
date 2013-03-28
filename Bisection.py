@@ -6,23 +6,51 @@ Created on 22 Mar 2013
 @author: sayz
 '''
 
+def isZero(n):
+    if bool(n): return n
 
-from math import log,ceil
 
-def bisection(f, lis, x1 = 0, x2 = 1, switch = 1 , tol=1.0e-19):
-    f1 = f(x1, lis)
-    if f1 == 0.0: return x1
-    f2 = f(x2, lis)
-    if f2 == 0.0: return x2
-    if f1*f2 > 0.0: print 'Root is not bracketed'
-    n = ceil(log(abs(x2 - x1)/tol)/log(2.0))
+def bisection(f, lis, x1=0, x2=1, ep=1.0e-4):
+    xlist = list()
+    flist = list()
+    elist = list()
     
-    for i in range(int(n)):
-        x3 = 0.5*(x1 + x2); f3 = f(x3, lis)
-        if (switch == 1) and (abs(f3) > abs(f1)) \
-                         and (abs(f3) > abs(f2)):
-            return None   
-        if f3 == 0.0: return x3
-        if f2*f3 < 0.0: x1 = x3; f1 = f3
-        else:           x2 = x3; f2 = f3
-    return (x1 + x2)/2.0
+    f1 = f(x1, lis)  # f(x1), f(x2) hesaplanıyor.
+    isZero(f1)
+
+    f2 = f(x2, lis)
+    isZero(f2)
+    xlist.append((x1, x2))
+    flist.append((f1, f2))
+    elist.append((x2 - x1) / 2.0)
+
+    if f1 * f2 > 0.0:  # f(x1) x f(x2) < 0 kontrolü yapılıyor
+        print 'Root is not bracketed'
+    else:
+        i = 0
+        while (((x2 - x1) / (2.0 ** (i + 2))) > ep):  # hata < ep kontrolü
+#            print "========== " + str(i + 2) + ". deneme ==========\n"
+            x3 = (x1 + x2) * 0.5
+            f3 = f(x3, lis)  # f(x3) hesaplanıyor
+
+            if (abs(f3) > abs(f1)) and (abs(f3) > abs(f2)):
+                return None
+
+            isZero(f3)
+
+            if f2 * f3 < 0.0:
+                x1 = x3
+                f1 = f3
+            else:
+                x2 = x3
+                f2 = f3
+
+            xlist.append((x1, x2))
+            flist.append((f1, f2))
+            elist.append((x2 - x1) / (2.0 ** (i + 2)))
+
+            i += 1
+        
+        elist.append((x2 - x1) / (2.0 ** (i + 2)))
+        root = (x1 + x2) / 2.0
+        return root, xlist, flist, elist
