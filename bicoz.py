@@ -51,22 +51,22 @@ class MainHandler(webapp.RequestHandler):
         return result
 
     def get(self):
-        user = users.get_current_user()
-        if user:
-            self.response.headers['Content-Type'] = 'text/html'
-            self.response.out.write("""<html>
-                                <head>
-                                    <title>""" + self.title + """</title>
-                                    <meta http-equiv="Content-Type" \
-                                            content="text/html; charset=UTF-8">
-                            </head>
-                            <body BGCOLOR=#A7A7A7>""")
+#         user = users.get_current_user()
+#         if user:
+        self.response.headers['Content-Type'] = 'text/html'
+        self.response.out.write("""<html>
+                            <head>
+                                <title>""" + self.title + """</title>
+                                <meta http-equiv="Content-Type" \
+                                        content="text/html; charset=UTF-8">
+                        </head>
+                        <body BGCOLOR=#A7A7A7>""")
 
-            self.response.out.write('<h2>Bisection method</h2>')
+        self.response.out.write('<h2>Bisection method</h2>')
 
-            self.response.out.write('Hello, ' + user.nickname())
-        else:
-            self.redirect(users.create_login_url(self.request.uri))
+#             self.response.out.write('Hello, ' + user.nickname())
+#         else:
+#             self.redirect(users.create_login_url(self.request.uri))
 
         self.response.out.write(self.formstring)
         self.response.out.write("<h2 align='right'>by Sayz</h2>")
@@ -107,7 +107,7 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write('<br>' + str(xfe + 1) +
                 ' adımda çözüme ulaşıldı.<br><br>')
         self.response.out.write('verilen fonksiyon: ' + fun + '<br>')
-        self.response.out.write('<p>son hata payı: %1.10f  < %1.5f (ε) </p>' %
+        self.response.out.write('<p>son hata payı: %1.10f  < %1.10f (ε) </p>' %
                                 (bid[3][xfe + 1], float(epsilon)))
         self.response.out.write("""
         ============================================ <br>
